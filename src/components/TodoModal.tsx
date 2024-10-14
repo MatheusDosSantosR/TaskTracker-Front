@@ -4,6 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { createTodo, updateTodo, removeTodo } from '../api/todos';
 import { Todo } from '../types/todo';
 import * as yup from 'yup';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Importando os estilos do Quill
 
 interface TodoModalProps {
     isOpen: boolean;
@@ -29,26 +31,29 @@ const TodoModal: React.FC<TodoModalProps> = ({ isOpen, onClose, onSubmit, todo, 
         //resolver: yupResolver(schema),
     });
 
+    const [description, setDescription] = useState<string>(todo?.description || '');
+
     // Preencher o formulário com os dados do to-do, se for fornecido
     useEffect(() => {
         if (todo) {
             setValue('title', todo.title);
-            setValue('description', todo.description || '');
+            setDescription(todo.description || '');
             setValue('isCompleted', todo.isCompleted);
         }
     }, [todo, setValue]);
 
     const onFormSubmit = async (data: Todo) => {
         setLoading(true);
+        const todoData = { ...data, description }; // Inclui a descrição formatada
         try {
             if (todo) {
                 // Se o to-do existir, atualiza
-                await updateTodo(todo.id, data);
-                onSubmit({ ...todo, ...data });
+                await updateTodo(todo.id, todoData);
+                onSubmit({ ...todo, ...todoData });
             } else {
                 // Caso contrário, cria um novo to-do
-                await createTodo(data);
-                onSubmit(data);
+                await createTodo(todoData);
+                onSubmit(todoData);
             }
             // Fechar o modal após o sucesso
             onClose();
@@ -95,16 +100,24 @@ const TodoModal: React.FC<TodoModalProps> = ({ isOpen, onClose, onSubmit, todo, 
                         {errors.title && <p className="text-red-500 text-sm">{errors.title.message}</p>}
                     </div>
 
-                    {/* Campo de descrição - Aumentar a altura da área de texto */}
+                    {/* Editor de descrição usando React-Quill */}
                     <div className="mb-4">
                         <label htmlFor="description" className="block text-gray-700 font-medium mb-2">
                             Descrição
                         </label>
-                        <textarea
-                            id="description"
-                            {...register('description')}
-                            className="w-full px-4 py-2 h-40 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" // Aumentar altura
-                        ></textarea>
+                        <ReactQuill
+                            value={description}
+                            onChange={setDescription}
+                            className="h-70" // Define a altura do editor
+                            modules={{
+                                toolbar: [
+                                    ['bold', 'italic', 'underline', 'strike'],        // negrito, itálico, sublinhado, tachado
+                                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],      // listas ordenadas e não ordenadas
+                                    [{ 'header': [1, 2, 3, false] }],                 // cabeçalhos de diferentes tamanhos
+                                    ['link'],                                          // links
+                                ],
+                            }}
+                        />
                     </div>
 
                     {/* Checkbox para marcar como concluído */}
