@@ -1,6 +1,6 @@
 // src/api/todos.ts
 import axiosInstance from './axiosInstance';
-import { UpdateUser, GetUser } from '../types/profile';
+import { UpdateUser, GetUser, CreateUser } from '../types/profile';
 
 // Função para atualizar o user
 export const updateUser = async (body: UpdateUser): Promise<any> => {
@@ -11,5 +11,11 @@ export const updateUser = async (body: UpdateUser): Promise<any> => {
 // Função para obter os dados do user
 export const getUser = async (): Promise<GetUser> => {
     const user = await axiosInstance.get("/api/profile");
+    return user.data
+};
+
+// Função para cadastrar usuario
+export const createUser = async (): Promise<CreateUser> => {
+    const user = await axiosInstance.post("/api/public/users");
     return user.data
 };

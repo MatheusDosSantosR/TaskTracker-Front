@@ -6,8 +6,3 @@ export const loginApi = async (credentials: LoginCredentials): Promise<AuthRespo
   const response = await axiosInstance.post<AuthResponse>('/api/login', credentials);
   return response.data;
 };
-
-export const register = async (credentials: LoginCredentials): Promise<AuthResponse> => {
-  const response = await axiosInstance.post<AuthResponse>('/api/login', credentials);
-  return response.data;
-};
