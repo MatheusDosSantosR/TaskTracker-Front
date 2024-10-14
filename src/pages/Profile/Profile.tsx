@@ -5,7 +5,7 @@ import Profile from '../../components/Profile/Profile';
 
 const Dashboard: React.FC = () => {
     useEffect(() => {
-        document.title = 'Dashboard';
+        document.title = 'Edição perfil';
       }, []);
     return (
         <DashboardLayout>
