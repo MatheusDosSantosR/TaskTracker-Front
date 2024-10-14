@@ -1,0 +1,90 @@
+/* src/components/DashboardLayout/DashboardLayout.module.css */
+.dashboard {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Cabeçalho */
+  .header {
+    height: 60px;
+    background-color: var(--primary-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+  
+  .headerContent {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .userInfo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .userInfo span {
+    margin-right: 20px;
+    font-weight: bold;
+  }
+  
+  .userInfo button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  .userInfo button svg {
+    margin-right: 5px;
+  }
+  
+  .userInfo button:hover {
+    text-decoration: underline;
+  }
+  
+  /* Layout principal */
+  .mainLayout {
+    display: flex;
+    flex: 1;
+  }
+  
+  /* Menu lateral */
+  .sidebar {
+    width: 250px;
+    background-color: var(--background-color);
+    padding: 20px;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+  }
+  
+  .sidebar li {
+    margin-bottom: 15px;
+  }
+  
+  .sidebar a {
+    text-decoration: none;
+    color: black;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  .sidebar a:hover {
+    color: var(--primary-color);
+  }
+  
+  .icon {
+    margin-right: 10px;
+    font-size: 1.2rem;
+  }
