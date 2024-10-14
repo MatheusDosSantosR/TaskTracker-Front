@@ -7,4 +7,10 @@ export interface Todo {
     updatedAt?: string;
     createdAt?: string;
     deletedAt?: string | null
+    options?: any;
+}
+
+export interface DeleteTodo {
+    message: string;
+    data: any;
 }
