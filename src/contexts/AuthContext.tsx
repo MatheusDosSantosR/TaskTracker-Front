@@ -29,8 +29,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     useEffect(() => {
         if (token) {
-            // Aqui você poderia buscar os detalhes do usuário usando o token
-            // Por simplicidade, assumimos que já temos os dados do usuário
             const storedUser = localStorage.getItem('user');
             if (storedUser) {
                 setUser(JSON.parse(storedUser));

@@ -2,10 +2,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login/Login';
-import Dashboard from './pages/Dashboard/Dashboard';
+import Dashboard from './pages/Todos/Todos';
+import DashboardWithCharts from './pages/Dashboard/Dashboard';
 import { AuthProvider } from './contexts/AuthContext';
 import PrivateRoute from './routes/PrivateRoute';
 import Register from './pages/Register/Register';
+import Profile from './pages/Profile/Profile';
 
 const App: React.FC = () => {
     return (
@@ -17,12 +19,25 @@ const App: React.FC = () => {
                         path="/dashboard"
                         element={
                             <PrivateRoute>
+                                <DashboardWithCharts />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/todos"
+                        element={
+                            <PrivateRoute>
                                 <Dashboard />
                             </PrivateRoute>
                         }
                     />
                     <Route path="/register" element={<Register />} />
                     <Route path="*" element={<Login />} />
+                    <Route path='/profile' element={
+                        <PrivateRoute>
+                            <Profile />
+                        </PrivateRoute>
+                    } />
                 </Routes>
             </Router>
         </AuthProvider>

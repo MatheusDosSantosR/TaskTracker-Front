@@ -1,6 +1,6 @@
 // src/components/TodoList.tsx
 import React, { useState, useEffect } from 'react';
-import { getTodos, updateTodo } from '../../api/todos';
+import { getTodos } from '../../api/todos';
 import { Todo } from '../../types/todo';
 import TodoModal from '../TodoModal';
 
@@ -57,7 +57,7 @@ const TodoList: React.FC = () => {
                 onClick={() => { setSelectedTodo(null); setIsModalOpen(true); }}
                 className="mb-6 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
             >
-                Novo To-Do
+                Nova Tarefa
             </button>
 
             {/* Modal de criação ou visualização de to-do */}
@@ -75,7 +75,7 @@ const TodoList: React.FC = () => {
                     <div
                         key={todo.id}
                         onClick={() => openTodoModal(todo)} // Abre o modal com o to-do
-                        className={`cursor-pointer bg-white rounded-lg shadow-md p-6 transition transform hover:scale-105 hover:shadow-lg ${todo.isCompleted ? 'border-l-4 border-green-500' : 'border-l-4 border-red-500'
+                        className={`cursor-pointer bg-white rounded-lg shadow-md p-6 transition transform hover:scale-105 hover:shadow-lg ${todo.isCompleted ? 'border-l-4 border-green-500' : 'border-l-4 border-red-500 max-w-96'
                             }`}
                     >
                         <div className="flex justify-between items-center mb-4">
