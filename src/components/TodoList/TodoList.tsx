@@ -1,4 +1,3 @@
-// src/components/TodoList.tsx
 import React, { useState, useEffect } from 'react';
 import { getTodos } from '../../api/todos';
 import { Todo } from '../../types/todo';
@@ -75,18 +74,22 @@ const TodoList: React.FC = () => {
                     <div
                         key={todo.id}
                         onClick={() => openTodoModal(todo)} // Abre o modal com o to-do
-                        className={`cursor-pointer bg-white rounded-lg shadow-md p-6 transition transform hover:scale-105 hover:shadow-lg ${todo.isCompleted ? 'border-l-4 border-green-500' : 'border-l-4 border-red-500 max-w-96'
-                            }`}
+                        className={`cursor-pointer bg-white rounded-lg shadow-md p-6 transition transform hover:scale-105 hover:shadow-lg 
+                            ${todo.isCompleted ? 'border-l-4 border-green-500' : 'border-l-4 border-red-500'} max-w-96 h-48`}
                     >
                         <div className="flex justify-between items-center mb-4">
-                            <h3 className={`text-xl font-semibold ${todo.isCompleted ? 'text-green-600' : 'text-red-600'}`}>
+                            {/* Limitar o título a 1 linha */}
+                            <h3 className={`text-xl font-semibold truncate ${todo.isCompleted ? 'text-green-600' : 'text-red-600'}`}>
                                 {todo.title}
                             </h3>
                         </div>
-                        <p className="text-gray-600 mb-4">{todo.description}</p>
+                        {/* Limitar a descrição a 2 linhas */}
+                        <p className="text-gray-600 mb-4 line-clamp-2">
+                            {todo.description}
+                        </p>
                         <span
-                            className={`inline-block text-sm px-3 py-1 rounded-full ${todo.isCompleted ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                                }`}
+                            className={`inline-block text-sm px-3 py-1 rounded-full 
+                                ${todo.isCompleted ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
                         >
                             {todo.isCompleted ? 'Concluído' : 'Pendente'}
                         </span>
