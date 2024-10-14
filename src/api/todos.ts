@@ -1,6 +1,6 @@
 // src/api/todos.ts
 import axiosInstance from './axiosInstance';
-import { Todo } from '../types/todo';
+import { DeleteTodo, Todo } from '../types/todo';
 
 //Função para obter os to-dos
 export const getTodos = async (): Promise<Todo[]> => {
@@ -9,12 +9,18 @@ export const getTodos = async (): Promise<Todo[]> => {
 };
 
 // Função para atualizar o status de um to-do
-export const updateTodoStatus = async (id: string, isCompleted: boolean): Promise<void> => {
-    await axiosInstance.put(`/api/todos/${id}`, { isCompleted });
+export const updateTodo = async (id: string, body: Todo): Promise<void> => {
+    await axiosInstance.put(`/api/todos/${id}`, body);
+};
+
+// Função para remover o status de um to-do
+export const removeTodo = async (id: string): Promise<DeleteTodo> => {
+    const response = await axiosInstance.delete(`/api/todos/${id}`);
+    return response.data
 };
 
 // Função para cadastro de um to-do
 export const createTodo = async (body: Todo): Promise<Todo[]> => {
-    const response = await axiosInstance.post(`/api/todos/`, { body });
+    const response = await axiosInstance.post(`/api/todos/`, body);
     return response.data;
 };
