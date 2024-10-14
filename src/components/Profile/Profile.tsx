@@ -58,8 +58,12 @@ const EditUserProfile: React.FC = () => {
 
         // Atualiza os dados do usuario
         try {
-            await updateUser(userData);
-            setSuccessMessage('Dados atualizados com sucesso.');
+            const response = await updateUser(userData);
+            setSuccessMessage(response.msg);
+            
+            // Atualiza nome no localStorage
+            localStorage.setItem('user', JSON.stringify(response.data));
+
         } catch (error) {
             setErrorMessage('Erro ao atualizar os dados.');
         } finally {
