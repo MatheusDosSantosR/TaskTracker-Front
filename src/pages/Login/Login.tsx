@@ -1,5 +1,5 @@
 // src/pages/Login/Login.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -19,6 +19,9 @@ const schema = yup.object().shape({
 });
 
 const Login: React.FC = () => {
+	useEffect(() => {
+		document.title = 'Login';
+	}, []);
 	const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>({
 		resolver: yupResolver(schema),
 	});
@@ -92,6 +95,9 @@ const Login: React.FC = () => {
 					>
 						{loading ? 'Entrando...' : 'Entrar'}
 					</button>
+					<p className="text-sm text-gray-600 mt-4 text-center">
+						Ainda não tem um conta ? <a href="/register" className="text-blue-500 hover:underline">Cadastre-se</a>
+					</p>
 				</form>
 			</div>
 		</div>
