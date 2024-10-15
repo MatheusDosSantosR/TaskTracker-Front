@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getTodos } from '../../api/todos';
 import { Todo } from '../../types/todo';
 import TodoModal from '../TodoModal';
+import DOMPurify from 'dompurify'; // Importa o DOMPurify para sanitizar o HTML
 
 const TodoList: React.FC = () => {
     const [todos, setTodos] = useState<Todo[]>([]);
@@ -14,7 +15,7 @@ const TodoList: React.FC = () => {
         setTodos([newTodo, ...todos]); // Adiciona o novo to-do no início da lista
     };
 
-    const handleDeleteTodo = (todoId: string) => {
+    const handleDeleteTodo = (todoId: number) => {
         setTodos(todos.filter((todo) => todo.id !== todoId)); // Remove o to-do da lista
         setIsModalOpen(false); // Fecha o modal após a exclusão
     };
@@ -28,6 +29,7 @@ const TodoList: React.FC = () => {
         const fetchTodos = async () => {
             try {
                 const todos = await getTodos();
+                console.log("LOGI", todos)
                 setTodos(todos);
             } catch (err) {
                 setError('Erro ao buscar to-dos');
@@ -78,15 +80,17 @@ const TodoList: React.FC = () => {
                             ${todo.isCompleted ? 'border-l-4 border-green-500' : 'border-l-4 border-red-500'} max-w-96 h-48`}
                     >
                         <div className="flex justify-between items-center mb-4">
-                            {/* Limitar o título a 1 linha */}
                             <h3 className={`text-xl font-semibold truncate ${todo.isCompleted ? 'text-green-600' : 'text-red-600'}`}>
                                 {todo.title}
                             </h3>
                         </div>
-                        {/* Limitar a descrição a 2 linhas */}
-                        <p className="text-gray-600 mb-4 line-clamp-2">
-                            {todo.description}
-                        </p>
+
+                        {/* Renderizar a descrição com HTML sanitizado */}
+                        <p
+                            className="text-gray-600 mb-4 line-clamp-2"
+                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(todo.description) }} // Sanitiza e renderiza o HTML
+                        />
+
                         <span
                             className={`inline-block text-sm px-3 py-1 rounded-full 
                                 ${todo.isCompleted ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}

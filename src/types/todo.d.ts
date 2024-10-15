@@ -1,13 +1,23 @@
 // src/types/todo.d.ts
 export interface Todo {
-    id: string;
+    id: number;
     title: string;
     description: string;
     isCompleted: boolean;
     updatedAt?: string;
     createdAt?: string;
-    deletedAt?: string | null
-    options?: any;
+    deletedAt?: string | null;
+}
+
+export interface ResponseCreateTodo {
+    msg: string;
+    data: Todo;
+}
+
+export interface UpdateTodo {
+    title: string;
+    description: string;
+    isCompleted: boolean;
 }
 
 export interface DeleteTodo {

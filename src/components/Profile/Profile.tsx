@@ -14,8 +14,7 @@ const EditUserProfile: React.FC = () => {
 
     // Carregar os dados do usuário quando a página for montada
     useEffect(() => {
-        // Aqui você pode fazer uma requisição à API para buscar os dados do usuário
-        // Exemplo de dados pré-carregados (simulação)
+        //requisição à API para buscar os dados do usuário
         const fetchUserData = async () => {
             setLoading(true);
             try {
@@ -60,7 +59,7 @@ const EditUserProfile: React.FC = () => {
         try {
             const response = await updateUser(userData);
             setSuccessMessage(response.msg);
-            
+
             // Atualiza nome no localStorage
             localStorage.setItem('user', JSON.stringify(response.data));
 

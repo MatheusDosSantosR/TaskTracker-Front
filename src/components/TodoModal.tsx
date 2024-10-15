@@ -44,7 +44,7 @@ const TodoModal: React.FC<TodoModalProps> = ({ isOpen, onClose, onSubmit, todo, 
 
     const onFormSubmit = async (data: Todo) => {
         setLoading(true);
-        const todoData = { ...data, description }; // Inclui a descrição formatada
+        const todoData = { ...data, description };
         try {
             if (todo) {
                 // Se o to-do existir, atualiza
@@ -52,13 +52,17 @@ const TodoModal: React.FC<TodoModalProps> = ({ isOpen, onClose, onSubmit, todo, 
                 onSubmit({ ...todo, ...todoData });
             } else {
                 // Caso contrário, cria um novo to-do
-                await createTodo(todoData);
-                onSubmit(todoData);
+                const response = await createTodo(todoData);
+
+                //Adiciona o ID
+                const data = {...todoData, id: response.data.id}
+
+                onSubmit(data);
             }
             // Fechar o modal após o sucesso
             onClose();
         } catch (error) {
-            console.error('Erro ao processar o to-do', error);
+            console.error('Erro ao processar a tarefas.', error);
         } finally {
             setLoading(false);
         }
@@ -72,7 +76,7 @@ const TodoModal: React.FC<TodoModalProps> = ({ isOpen, onClose, onSubmit, todo, 
                 onDelete(); // Chama a função passada para atualizar a lista localmente
                 onClose(); // Fecha o modal após a exclusão
             } catch (error) {
-                console.error('Erro ao deletar o to-do', error);
+                console.error('Erro ao deletar tarefa.', error);
             } finally {
                 setLoading(false);
             }

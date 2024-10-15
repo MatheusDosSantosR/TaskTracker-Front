@@ -7,7 +7,7 @@ import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 
 interface Todo {
-    id: string;
+    id: number;
     title: string;
     isCompleted: boolean;
 }

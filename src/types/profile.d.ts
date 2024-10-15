@@ -17,3 +17,8 @@ export interface CreateUser {
     email: string;
     password: string;
 }
+
+export interface ResponseCreateUser {
+    msg: string;
+    data: GetUser
+}

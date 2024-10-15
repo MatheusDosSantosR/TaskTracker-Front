@@ -5,7 +5,7 @@ import TodoList from '../../components/TodoList/TodoList';
 
 const Dashboard: React.FC = () => {
     useEffect(() => {
-        document.title = 'Dashboard';
+        document.title = 'Tarefas';
       }, []);
     return (
         <DashboardLayout>
