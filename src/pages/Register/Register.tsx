@@ -13,11 +13,6 @@ interface RegisterFormInputs {
     confirmPassword: string;
 }
 
-interface ResponseRequest {
-    msg: string;
-    data: RegisterFormInputs
-}
-
 const schema = yup.object().shape({
     name: yup.string().required('O nome é obrigatório'),
     email: yup.string().email('Email inválido').required('O email é obrigatório'),
