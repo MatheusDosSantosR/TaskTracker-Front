@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+//import { yupResolver } from '@hookform/resolvers/yup';
 import { createTodo, updateTodo, removeTodo } from '../api/todos';
 import { Todo } from '../types/todo';
-import * as yup from 'yup';
+//import * as yup from 'yup';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Importando os estilos do Quill
 
@@ -16,14 +16,14 @@ interface TodoModalProps {
 }
 
 // Esquema de validação com Yup
-const schema = yup.object().shape({
+/* const schema = yup.object().shape({
     id: yup.string(),
     title: yup.string().required('O título é obrigatório'),
     description: yup.string().optional(),
     isCompleted: yup.boolean(),
     updatedAt: yup.string(),
     createdAt: yup.string(),
-});
+}); */
 
 const TodoModal: React.FC<TodoModalProps> = ({ isOpen, onClose, onSubmit, todo, onDelete }) => {
     const [loading, setLoading] = useState<boolean>(false);
