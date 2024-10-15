@@ -1,15 +1,21 @@
 // src/pages/Register/Register.tsx
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useForm } from 'react-hook-form';
+import { createUser } from "../../api/profile"
 import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 interface RegisterFormInputs {
     name: string;
     email: string;
     password: string;
     confirmPassword: string;
+}
+
+interface ResponseRequest {
+    msg: string;
+    data: RegisterFormInputs
 }
 
 const schema = yup.object().shape({
@@ -20,21 +26,28 @@ const schema = yup.object().shape({
 });
 
 const Register: React.FC = () => {
+    useEffect(() => {
+        document.title = 'Cadastro';
+    }, []);
     const { register, handleSubmit, formState: { errors } } = useForm<RegisterFormInputs>({
         resolver: yupResolver(schema),
     });
     const [loading, setLoading] = useState<boolean>(false);
     const navigate = useNavigate();
-
+    const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const sleep = (ms: number | undefined) => new Promise(r => setTimeout(r, ms));
+    
     const onSubmit = async (data: RegisterFormInputs) => {
         setLoading(true);
         try {
-            // Enviar os dados para a API de cadastro
-            console.log('Dados de cadastro:', data);
-            // Redirecionar para a página de login ou dashboard após o cadastro
+            const response = await createUser(data);
+            setSuccessMessage(response.msg)
+            // Sleep e redirecionar para a página de login ou dashboard após o cadastro
+            await sleep(3000);
             navigate('/dashboard');
-        } catch (error) {
-            console.error('Erro no cadastro', error);
+        } catch (error: any) {
+            setErrorMessage(error.response.data.message)
         } finally {
             setLoading(false);
         }
@@ -44,7 +57,12 @@ const Register: React.FC = () => {
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
                 <h2 className="text-2xl font-bold mb-6 text-center text-gray-700">Cadastro</h2>
-
+                {errorMessage && (
+                <div className="bg-red-100 text-red-700 p-3 mb-4 rounded">{errorMessage}</div>
+                )}
+                {successMessage && (
+                    <div className="bg-green-100 text-green-700 p-3 mb-4 rounded">{successMessage} Redirecionando...</div>
+                )}
                 <form onSubmit={handleSubmit(onSubmit)}>
                     {/* Nome */}
                     <div className="mb-4">
