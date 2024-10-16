@@ -10,12 +10,24 @@ const TodoList: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isUpdating, setIsUpdating] = useState<boolean>(false); // Estado para controlar atualização
 
     const handleAddTodo = (newTodo: Todo) => {
         const idExists = todos.some((todo) => todo.id === newTodo.id);
-        if (!idExists) {
+
+        if (idExists) {
+            // Atualiza o to-do existente
+            const updatedTodos = todos.map((todo) =>
+                todo.id === newTodo.id ? newTodo : todo
+            );
+            setTodos(updatedTodos);
+            setIsUpdating(false);
+        } else {
+            // Adiciona o novo to-do
             setTodos([newTodo, ...todos]);
         }
+
+        setIsModalOpen(false); // Fecha o modal após adicionar/atualizar
     };
 
     const handleDeleteTodo = (todoId: number) => {
@@ -25,6 +37,7 @@ const TodoList: React.FC = () => {
 
     const openTodoModal = (todo: Todo) => {
         setSelectedTodo(todo); // Define o to-do selecionado
+        setIsUpdating(true); // Indica que estamos em modo de atualização
         setIsModalOpen(true); // Abre o modal
     };
 
@@ -57,7 +70,7 @@ const TodoList: React.FC = () => {
 
             {/* Botão para abrir o modal de novo to-do */}
             <button
-                onClick={() => { setSelectedTodo(null); setIsModalOpen(true); }}
+                onClick={() => { setSelectedTodo(null); setIsUpdating(false); setIsModalOpen(true); }} // Define como novo to-do
                 className="mb-6 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
             >
                 Nova Tarefa
@@ -70,6 +83,7 @@ const TodoList: React.FC = () => {
                 onSubmit={handleAddTodo}
                 todo={selectedTodo || undefined} // Se existir um to-do selecionado, exibirá no modal
                 onDelete={selectedTodo ? () => handleDeleteTodo(selectedTodo.id) : undefined}
+                isUpdating={isUpdating} // Passa a informação se está atualizando
             />
 
             {/* Grid de to-dos */}

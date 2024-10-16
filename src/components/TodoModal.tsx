@@ -12,7 +12,8 @@ interface TodoModalProps {
     onClose: () => void;
     onSubmit: (todo: Todo) => void;
     todo?: Todo; // Prop opcional para exibir um to-do existente
-    onDelete?: () => void; // Função para deletar o to-do (opcional)
+    onDelete?: () => void;
+    isUpdating?: boolean;
 }
 
 // Esquema de validação com Yup
