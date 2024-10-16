@@ -12,7 +12,10 @@ const TodoList: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleAddTodo = (newTodo: Todo) => {
-        setTodos([newTodo, ...todos]); // Adiciona o novo to-do no início da lista
+        const idExists = todos.some((todo) => todo.id === newTodo.id);
+        if (!idExists) {
+            setTodos([newTodo, ...todos]);
+        }
     };
 
     const handleDeleteTodo = (todoId: number) => {
@@ -29,7 +32,6 @@ const TodoList: React.FC = () => {
         const fetchTodos = async () => {
             try {
                 const todos = await getTodos();
-                console.log("LOGI", todos)
                 setTodos(todos);
             } catch (err) {
                 setError('Erro ao buscar to-dos');
