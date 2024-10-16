@@ -51,7 +51,7 @@ const Register: React.FC = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h2 className="text-2xl font-bold mb-6 text-center text-gray-700">Cadastro</h2>
+                <h2 className="text-2xl font-bold mb-6 text-center text-gray-700">Cadastre-se</h2>
                 {errorMessage && (
                 <div className="bg-red-100 text-red-700 p-3 mb-4 rounded">{errorMessage}</div>
                 )}
