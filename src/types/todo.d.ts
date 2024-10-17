@@ -9,7 +9,17 @@ export interface Todo {
     deletedAt?: string | null;
     priority: "low" | "medium" | "high";
     dueDate: string | null;
-    subtasks: Array<any>
+    subtasks: Array<any> | [];
+    status: "inProgress" | "pending" | "completed";
+}
+
+export interface subtasks {
+    id: number;
+    title: string;
+    isCompleted: boolean;
+    createdAt: string;
+    updatedAt: string;
+    deletedAt: string | null;
 }
 
 export interface ResponseCreateTodo {

@@ -3,8 +3,13 @@ import axiosInstance from './axiosInstance';
 import { DeleteTodo, Todo, ResponseCreateTodo } from '../types/todo';
 
 //Função para obter os to-dos
-export const getTodos = async (): Promise<Todo[]> => {
-    const response = await axiosInstance.get('/api/todos');
+export const getTodos = async (priority?: string, status?: string): Promise<Todo[]> => {
+    const response = await axiosInstance.get('/api/todos',{
+        params:{
+            priority: priority || undefined, // Envia apenas se existir prioridade
+            status: status || undefined      // Envia apenas se existir status
+        }
+    });
     return response.data;
 };
 
