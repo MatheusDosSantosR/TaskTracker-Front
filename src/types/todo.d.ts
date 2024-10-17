@@ -7,6 +7,9 @@ export interface Todo {
     updatedAt?: string;
     createdAt?: string;
     deletedAt?: string | null;
+    priority: "low" | "medium" | "high";
+    dueDate: string | null;
+    subtasks: Array<any>
 }
 
 export interface ResponseCreateTodo {

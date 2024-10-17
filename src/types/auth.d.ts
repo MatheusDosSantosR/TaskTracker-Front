@@ -5,12 +5,16 @@ export interface LoginCredentials {
 }
 
 export interface AuthResponse {
-    token: string;
-    user: {
-        id: string;
-        name: string;
-        email: string;
-    };
+    status: "success" | "error";
+    message: string;
+    data: {
+        token: string;
+        user: {
+            id: number;
+            name: string;
+            email: string;
+        };
+    }
 }
 
 export interface RegisterCredentials {

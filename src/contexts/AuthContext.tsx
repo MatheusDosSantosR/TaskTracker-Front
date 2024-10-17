@@ -4,7 +4,7 @@ import { LoginCredentials, AuthResponse } from '../types/auth';
 import { loginApi } from '../api/auth';
 
 interface AuthContextProps {
-    user: AuthResponse['user'] | null;
+    user: AuthResponse['data']['user'] | null;
     token: string | null;
     login: (credentials: LoginCredentials) => Promise<void>;
     logout: () => void;
@@ -22,7 +22,7 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-    const [user, setUser] = useState<AuthResponse['user'] | null>(null);
+    const [user, setUser] = useState<AuthResponse['data']['user'] | null>(null);
     const [token, setToken] = useState<string | null>(() => {
         return localStorage.getItem('token');
     });
@@ -38,10 +38,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const login = async (credentials: LoginCredentials) => {
         const response = await loginApi(credentials);
-        setToken(response.token);
-        setUser(response.user);
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('user', JSON.stringify(response.user));
+        setToken(response.data.token);
+        setUser(response.data.user);
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
     };
 
     const logout = () => {
