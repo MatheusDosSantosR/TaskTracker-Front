@@ -14,17 +14,28 @@ interface LoginFormInputs {
 
 const schema = yup.object().shape({
 	email: yup.string().email('Email inválido').required('O email é obrigatório'),
-	password: yup.string().min(3, 'A senha deve ter pelo menos 3 caracteres').required('A senha é obrigatória'),
+	password: yup.string().min(3, 'A senha deve ter pelo menos 6 caracteres').required('A senha é obrigatória'),
 	rememberMe: yup.boolean().default(false),
 });
 
 const Login: React.FC = () => {
 	useEffect(() => {
+		const getRemember = localStorage.getItem("remember")
+
+		if (getRemember) {
+			const objRemember = JSON.parse(getRemember)
+			setEmail(objRemember.email)
+			setRemember(objRemember.rememberMe)
+		}
 		document.title = 'Login';
 	}, []);
+
 	const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>({
 		resolver: yupResolver(schema),
 	});
+	const [email, setEmail] = useState<string>('');
+	const [remember, setRemember] = useState<boolean>(false);
+	const [errorMessage, setErrorMessage] = useState('');
 	const [loading, setLoading] = useState<boolean>(false);
 	const { login } = useAuth();
 	const navigate = useNavigate();
@@ -34,11 +45,16 @@ const Login: React.FC = () => {
 		try {
 			await login(data);
 			if (data.rememberMe) {
-				// Armazene o token ou informações conforme sua necessidade
+				data.password = ""
+				localStorage.setItem("remember", JSON.stringify(data))
 			}
-			navigate('/dashboard'); // Redireciona após login
-		} catch (err) {
-			console.error('Erro ao realizar login', err);
+			else {
+				localStorage.removeItem("remember");
+			}
+			// Redireciona após login
+			navigate('/dashboard');
+		} catch (err: any) {
+			setErrorMessage(err.response.data.message);
 		} finally {
 			setLoading(false);
 		}
@@ -48,7 +64,9 @@ const Login: React.FC = () => {
 		<div className="min-h-screen flex items-center justify-center bg-gray-100">
 			<div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
 				<h2 className="text-2xl font-bold mb-6 text-center text-gray-700">Login</h2>
-
+				{errorMessage && (
+					<div className="bg-red-100 text-red-700 p-3 mb-4 rounded">{errorMessage}</div>
+				)}
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<div className="mb-4">
 						<label htmlFor="email" className="block text-gray-700 font-medium mb-2">
@@ -57,6 +75,8 @@ const Login: React.FC = () => {
 						<input
 							type="email"
 							{...register('email')}
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
 							className={`w-full px-4 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
 						/>
 						{errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
@@ -79,6 +99,8 @@ const Login: React.FC = () => {
 							<input
 								type="checkbox"
 								{...register('rememberMe')}
+								checked={remember}
+								onChange={(e) => setRemember(e.target.checked)}
 								className="form-checkbox text-blue-600"
 							/>
 							<span className="ml-2 text-gray-700">Lembrar-me</span>

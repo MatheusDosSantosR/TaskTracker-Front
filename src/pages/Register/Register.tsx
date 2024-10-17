@@ -56,7 +56,7 @@ const Register: React.FC = () => {
                 <div className="bg-red-100 text-red-700 p-3 mb-4 rounded">{errorMessage}</div>
                 )}
                 {successMessage && (
-                    <div className="bg-green-100 text-green-700 p-3 mb-4 rounded">{successMessage} Redirecionando...</div>
+                    <div className="bg-green-100 text-green-700 p-3 mb-4 rounded">{successMessage} redirecionando...</div>
                 )}
                 <form onSubmit={handleSubmit(onSubmit)}>
                     {/* Nome */}
