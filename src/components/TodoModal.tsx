@@ -120,12 +120,12 @@ const TodoModal: React.FC<TodoModalProps> = ({ isOpen, onClose, onSubmit, todo, 
           {/* Editor de descrição usando React-Quill */}
           <div className="mb-4">
             <label htmlFor="description" className="block text-gray-700 font-medium mb-2">Descrição</label>
-            <ReactQuill value={description} onChange={setDescription} className="h-40" />
+            <ReactQuill value={description} onChange={setDescription} className="h-28" />
           </div>
 
           {/* Campo de Prioridade */}
           <div className="mb-4">
-            <label htmlFor="priority" className="block text-gray-700 font-medium mb-2">Prioridade</label>
+            <label htmlFor="priority" className="block text-gray-700 font-medium mb-2 mt-12">Prioridade</label>
             <select
               id="priority"
               {...register('priority')}
