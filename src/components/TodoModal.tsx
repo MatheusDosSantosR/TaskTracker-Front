@@ -18,11 +18,11 @@ const TodoModal: React.FC<TodoModalProps> = ({ isOpen, onClose, onSubmit, todo, 
     const [loading, setLoading] = useState<boolean>(false);
     const [description, setDescription] = useState<string>(todo?.description || '');
     const [subtaskTitle, setSubtaskTitle] = useState<string>('');
-    const [subtasks, setSubtasks] = useState<{ id: number; title: string; isCompleted: boolean }[]>(
+    const [subtasks, setSubtasks] = useState<{ id?: number; title: string; isCompleted: boolean }[]>(
         todo?.subtasks || []
     );
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm<Todo>({
+    const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm<Todo>({
         defaultValues: {
             priority: todo?.priority || 'medium',
             dueDate: todo?.dueDate || '',
@@ -39,7 +39,16 @@ const TodoModal: React.FC<TodoModalProps> = ({ isOpen, onClose, onSubmit, todo, 
             setValue('dueDate', todo.dueDate ? new Date(todo.dueDate).toISOString().split('T')[0] : '');
             setSubtasks(todo.subtasks || []);
         }
-    }, [todo, setValue]);
+
+        if (isOpen && !todo) {
+            reset({
+                title: '',
+                description: '',
+                dueDate: ''
+            });
+        }
+
+    }, [todo, setValue, reset]);
 
     const onFormSubmit = async (data: Todo) => {
         setLoading(true);
@@ -66,7 +75,6 @@ const TodoModal: React.FC<TodoModalProps> = ({ isOpen, onClose, onSubmit, todo, 
     const handleAddSubtask = () => {
         if (subtaskTitle.trim()) {
             const newSubtask = {
-                id: Date.now(),
                 title: subtaskTitle,
                 isCompleted: false,
             };
@@ -75,11 +83,11 @@ const TodoModal: React.FC<TodoModalProps> = ({ isOpen, onClose, onSubmit, todo, 
         }
     };
 
-    const handleSubtaskChange = (id: number, isCompleted: boolean) => {
+    const handleSubtaskChange = (id: number | null, isCompleted: boolean) => {
         setSubtasks(subtasks.map(subtask => subtask.id === id ? { ...subtask, isCompleted } : subtask));
     };
 
-    const handleDeleteSubtask = (id: number) => {
+    const handleDeleteSubtask = (id?: number) => {
         setSubtasks(subtasks.filter(subtask => subtask.id !== id));
     };
 
@@ -160,7 +168,7 @@ const TodoModal: React.FC<TodoModalProps> = ({ isOpen, onClose, onSubmit, todo, 
                                     <input
                                         type="checkbox"
                                         checked={subtask.isCompleted}
-                                        onChange={e => handleSubtaskChange(subtask.id, e.target.checked)}
+                                        onChange={e => handleSubtaskChange(subtask.id || null, e.target.checked)}
                                         className="mr-2"
                                         data-cy={`checkbox-subtask-${subtask.id}`}
                                     />
@@ -199,7 +207,7 @@ const TodoModal: React.FC<TodoModalProps> = ({ isOpen, onClose, onSubmit, todo, 
 
                     {/* Checkbox para marcar como concluído */}
                     <div className="mb-6 flex items-center">
-                        <input type="checkbox" id="isCompleted" {...register('isCompleted')} className="mr-2" data-cy="completed-input"/>
+                        <input type="checkbox" id="isCompleted" {...register('isCompleted')} className="mr-2" data-cy="completed-input" />
                         <label htmlFor="isCompleted" className="text-gray-700 font-medium">Tarefa Concluída</label>
                     </div>
 
