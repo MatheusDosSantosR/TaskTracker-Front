@@ -3,13 +3,13 @@ import { getTodos } from '../../api/todos';
 import { Todo } from '../../types/todo';
 import TodoModal from '../TodoModal';
 import DOMPurify from 'dompurify';
+
 interface TodoListBoardProps {
     todos: Todo[];
-    updateTodos: (updatedTodos: Todo[]) => void; // Função para atualizar os todos
+    updateTodos: (updatedTodos: Todo[]) => void;
 }
 
 const TodoList: React.FC<TodoListBoardProps> = ({ todos, updateTodos }) => {
-    //const [todos, setTodos] = useState<Todo[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
@@ -47,26 +47,24 @@ const TodoList: React.FC<TodoListBoardProps> = ({ todos, updateTodos }) => {
         setIsModalOpen(true);
     };
 
-    // Atualiza a função fetchTodos para aceitar os filtros
-    const fetchTodos = async (priority: string, status: string) => {
-        // Ativa o estado de carregamento
-        setLoading(true);
-        try {
-            // Passa os filtros para a API
-            const todos = await getTodos(priority, status);
-            updateTodos(todos);
-        } catch (err) {
-            setError('Erro ao buscar to-dos');
-        } finally {
-            // Desativa o estado de carregamento
-            setLoading(false);
-        }
-    };
-
     // Dispara a busca de to-dos toda vez que os filtros mudarem
     useEffect(() => {
-        fetchTodos(filterPriority, filterStatus);
-    }, [filterPriority, filterStatus]); // Efeito disparado ao alterar os filtros
+
+        // Atualiza a função fetchTodos para aceitar os filtros
+        const fetchTodos = async () => {
+            setLoading(true);
+            try {
+                const todos = await getTodos();
+                updateTodos(todos);
+            } catch (err) {
+                setError('Erro ao buscar to-dos');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTodos();
+    }, [updateTodos]);
 
     if (loading) {
         return <div>Carregando to-dos...</div>;

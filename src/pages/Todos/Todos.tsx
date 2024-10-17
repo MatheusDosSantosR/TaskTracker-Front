@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import DashboardLayout from '../../components/DashboardLayout/DashboardLayout';
 import TodoList from '../../components/TodoList/TodoList';
 import KanbanBoard from '../../components/TodoList/KanbanBoard';
@@ -18,9 +18,9 @@ const Dashboard: React.FC = () => {
         fetchTodos();
     }, []);
 
-    const updateTodos = (updatedTodos: Todo[]) => {
+    const updateTodos = useCallback((updatedTodos: Todo[]) => {
         setTodos(updatedTodos);
-    };
+    }, []);
 
     const handleViewChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setViewMode(event.target.value as 'cards' | 'kanban');
@@ -30,7 +30,7 @@ const Dashboard: React.FC = () => {
         <DashboardLayout>
             <div className="mb-4 flex justify-between items-center">
                 <h2 className="text-3xl font-bold text-gray-800">Gerenciamento de Tarefas</h2>
-                
+
                 <select
                     value={viewMode}
                     onChange={handleViewChange}
