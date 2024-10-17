@@ -68,6 +68,7 @@ const Register: React.FC = () => {
                             type="text"
                             {...register('name')}
                             className={`w-full px-4 py-2 border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                            data-cy="name-input"
                         />
                         {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
                     </div>
@@ -81,6 +82,7 @@ const Register: React.FC = () => {
                             type="email"
                             {...register('email')}
                             className={`w-full px-4 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                            data-cy="email-input"
                         />
                         {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
                     </div>
@@ -94,6 +96,7 @@ const Register: React.FC = () => {
                             type="password"
                             {...register('password')}
                             className={`w-full px-4 py-2 border ${errors.password ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                            data-cy="password-input"
                         />
                         {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
                     </div>
@@ -107,6 +110,7 @@ const Register: React.FC = () => {
                             type="password"
                             {...register('confirmPassword')}
                             className={`w-full px-4 py-2 border ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                            data-cy="confirm-password-input"
                         />
                         {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>}
                     </div>
@@ -116,8 +120,10 @@ const Register: React.FC = () => {
                         type="submit"
                         className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
                         disabled={loading}
+                        data-cy="submit-button"
                     >
                         {loading ? 'Cadastrando...' : 'Cadastrar'}
+                        
                     </button>
                 </form>
 
