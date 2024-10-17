@@ -92,6 +92,7 @@ const TodoList: React.FC<TodoListBoardProps> = ({ todos, updateTodos }) => {
                         value={filterPriority}
                         onChange={(e) => setFilterPriority(e.target.value)}
                         className="bg-white border border-gray-300 text-gray-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                        data-cy="priority-select"
                     >
                         <option value="">Todas</option>
                         <option value="alta">Alta</option>
@@ -110,6 +111,7 @@ const TodoList: React.FC<TodoListBoardProps> = ({ todos, updateTodos }) => {
                         value={filterStatus}
                         onChange={(e) => setFilterStatus(e.target.value)}
                         className="bg-white border border-gray-300 text-gray-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+                        data-cy="status-select"
                     >
                         <option value="">Todos</option>
                         <option value="pendente">Pendente</option>
@@ -122,6 +124,7 @@ const TodoList: React.FC<TodoListBoardProps> = ({ todos, updateTodos }) => {
             <button
                 onClick={() => { setSelectedTodo(null); setIsUpdating(false); setIsModalOpen(true); }}
                 className="mb-6 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+                data-cy="create-todo-button"
             >
                 Nova Tarefa
             </button>
@@ -144,6 +147,7 @@ const TodoList: React.FC<TodoListBoardProps> = ({ todos, updateTodos }) => {
                         onClick={() => openTodoModal(todo)}
                         className={`cursor-pointer bg-white rounded-lg shadow-md p-6 transition transform hover:scale-105 hover:shadow-lg 
                             ${todo.isCompleted ? 'border-l-4 border-green-500' : 'border-l-4 border-red-500'} max-w-96 h-48`}
+                        data-cy={`todo-card-${todo.id}`}
                     >
                         <div className="flex justify-between items-center mb-4">
                             <h3 className={`text-xl font-semibold truncate ${todo.isCompleted ? 'text-green-600' : 'text-red-600'}`}>

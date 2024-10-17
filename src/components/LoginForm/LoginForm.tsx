@@ -35,20 +35,28 @@ const LoginForm: React.FC = () => {
                 <input
                     type="email"
                     id="email"
-                    {...register('email', { required: 'Email é obrigatório', pattern: { value: /^\S+@\S+$/i, message: 'Email inválido' } })}
+                    {...register('email', {
+                        required: 'Email é obrigatório',
+                        pattern: { value: /^\S+@\S+$/i, message: 'Email inválido' },
+                    })}
+                    data-cy="email-input"
                 />
+
                 {errors.email && <span className={styles.error}>{errors.email.message}</span>}
             </div>
             <div className={styles.formGroup}>
                 <label htmlFor="password">Senha:</label>
                 <input
+                    data-cy="password-input"
                     type="password"
                     id="password"
                     {...register('password', { required: 'Senha é obrigatória' })}
                 />
                 {errors.password && <span className={styles.error}>{errors.password.message}</span>}
             </div>
-            <button type="submit" disabled={loading}>
+            <button
+                data-cy="submit-button"
+                type="submit" disabled={loading}>
                 {loading ? 'Entrando...' : 'Entrar'}
             </button>
         </form>

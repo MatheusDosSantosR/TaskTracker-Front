@@ -95,6 +95,7 @@ const EditUserProfile: React.FC = () => {
                         onChange={handleChange}
                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         required
+                        data-cy="name-input"
                     />
                 </div>
 
@@ -111,6 +112,7 @@ const EditUserProfile: React.FC = () => {
                         onChange={handleChange}
                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         required
+                        data-cy="email-input"
                     />
                 </div>
 
@@ -127,6 +129,7 @@ const EditUserProfile: React.FC = () => {
                         onChange={handleChange}
                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Deixe em branco para manter a senha atual"
+                        data-cy="password-input"
                     />
                 </div>
 
@@ -142,6 +145,7 @@ const EditUserProfile: React.FC = () => {
                         value={userData.confirmPassword}
                         onChange={handleChange}
                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        data-cy="confirm-password-input"
                     />
                 </div>
 
@@ -150,6 +154,7 @@ const EditUserProfile: React.FC = () => {
                     className={`w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors ${loading ? 'opacity-50 cursor-not-allowed' : ''
                         }`}
                     disabled={loading}
+                    data-cy="button-submit"
                 >
                     {loading ? 'Salvando...' : 'Salvar Alterações'}
                 </button>

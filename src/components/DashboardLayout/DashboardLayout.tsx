@@ -32,6 +32,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                             to="/dashboard"
                             className={`text-gray-200 hover:text-white ${location.pathname === '/dashboard' ? 'border-b-4 border-white' : ''
                                 }`}
+                            data-cy="dashboard-link"
                         >
                             Home
                         </NavLink>
@@ -39,6 +40,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                             to="/todos"
                             className={`text-gray-200 hover:text-white ${location.pathname === '/todos' ? 'border-b-4 border-white' : ''
                                 }`}
+                            data-cy="todos-link"
                         >
                             Tarefas
                         </NavLink>
@@ -46,6 +48,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                             to="/profile"
                             className={`text-gray-200 hover:text-white ${location.pathname === '/profile' ? 'border-b-4 border-white' : ''
                                 }`}
+                            data-cy="profile-link"
                         >
                             Perfil
                         </NavLink>
@@ -55,11 +58,15 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                     <div className="flex items-center space-x-4">
                         <div className="flex items-center">
                             <FaUserCircle className="text-2xl mr-2" />
-                            <span className="font-semibold">{user?.name}</span>
+                            <span
+                                data-cy="name-user-span"
+                                className="font-semibold">{user?.name}</span>
                         </div>
                         <button
                             onClick={handleLogout}
                             className="bg-red-500 px-4 py-2 rounded-md hover:bg-red-600 transition text-sm"
+                            data-cy="logout-button"
+
                         >
                             Sair
                         </button>

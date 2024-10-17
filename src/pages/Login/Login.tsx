@@ -78,6 +78,7 @@ const Login: React.FC = () => {
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							className={`w-full px-4 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+							data-cy="email-input"
 						/>
 						{errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
 					</div>
@@ -90,6 +91,7 @@ const Login: React.FC = () => {
 							type="password"
 							{...register('password')}
 							className={`w-full px-4 py-2 border ${errors.password ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+							data-cy="password-input"
 						/>
 						{errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
 					</div>
@@ -102,6 +104,7 @@ const Login: React.FC = () => {
 								checked={remember}
 								onChange={(e) => setRemember(e.target.checked)}
 								className="form-checkbox text-blue-600"
+								data-cy="remember-checkbox"
 							/>
 							<span className="ml-2 text-gray-700">Lembrar-me</span>
 						</label>
@@ -114,6 +117,7 @@ const Login: React.FC = () => {
 						type="submit"
 						className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors"
 						disabled={loading}
+						data-cy="submit-button"
 					>
 						{loading ? 'Entrando...' : 'Entrar'}
 					</button>
