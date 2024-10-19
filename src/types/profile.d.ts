@@ -22,3 +22,10 @@ export interface ResponseCreateUser {
     msg: string;
     data: GetUser
 }
+
+export interface IDefaultResponse {
+    status: "success" | "error";
+    message: string;
+    data?: object;
+    details?: string;
+}

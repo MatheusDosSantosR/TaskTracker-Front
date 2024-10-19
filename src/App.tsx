@@ -8,12 +8,14 @@ import { AuthProvider } from './contexts/AuthContext';
 import PrivateRoute from './routes/PrivateRoute';
 import Register from './pages/Register/Register';
 import Profile from './pages/Profile/Profile';
+import Recoveryimport from './components/RecoveryPassword/RecoveryPassword';
 
 const App: React.FC = () => {
     return (
         <AuthProvider>
             <Router>
                 <Routes>
+                    <Route path="/forgot-password" element={<Recoveryimport />} />
                     <Route path="/login" element={<Login />} />
                     <Route
                         path="/dashboard"
