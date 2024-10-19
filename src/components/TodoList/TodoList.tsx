@@ -54,7 +54,7 @@ const TodoList: React.FC<TodoListBoardProps> = ({ todos, updateTodos }) => {
         const fetchTodos = async () => {
             setLoading(true);
             try {
-                const todos = await getTodos();
+                const todos = await getTodos(filterPriority, filterStatus);
                 updateTodos(todos);
             } catch (err) {
                 setError('Erro ao buscar to-dos');
@@ -64,7 +64,7 @@ const TodoList: React.FC<TodoListBoardProps> = ({ todos, updateTodos }) => {
         };
 
         fetchTodos();
-    }, [updateTodos]);
+    }, [updateTodos, filterPriority, filterStatus]);
 
     if (loading) {
         return <div>Carregando to-dos...</div>;
@@ -93,9 +93,9 @@ const TodoList: React.FC<TodoListBoardProps> = ({ todos, updateTodos }) => {
                         data-cy="priority-select"
                     >
                         <option value="">Todas</option>
-                        <option value="alta">Alta</option>
-                        <option value="media">Média</option>
-                        <option value="baixa">Baixa</option>
+                        <option value="high">Alta</option>
+                        <option value="medium">Média</option>
+                        <option value="low">Baixa</option>
                     </select>
                 </div>
 
@@ -107,7 +107,9 @@ const TodoList: React.FC<TodoListBoardProps> = ({ todos, updateTodos }) => {
                     <select
                         id="filterStatus"
                         value={filterStatus}
-                        onChange={(e) => setFilterStatus(e.target.value)}
+                        onChange={(e) => {
+                            setFilterStatus(e.target.value)
+                        }}
                         className="bg-white border border-gray-300 text-gray-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                         data-cy="status-select"
                     >
