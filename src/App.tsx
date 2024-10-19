@@ -9,14 +9,16 @@ import PrivateRoute from './routes/PrivateRoute';
 import Register from './pages/Register/Register';
 import Profile from './pages/Profile/Profile';
 import Recoveryimport from './components/RecoveryPassword/RecoveryPassword';
+import ResetPassword from './pages/Recovery-Password/Reset-Password';
 
 const App: React.FC = () => {
     return (
         <AuthProvider>
             <Router>
                 <Routes>
+                    <Route path="/reset-password/:token" element={<ResetPassword />} />
                     <Route path="/forgot-password" element={<Recoveryimport />} />
-                    <Route path="/login" element={<Login />} />
+                    <Route path="/login" element={<Login />} />ß
                     <Route
                         path="/dashboard"
                         element={

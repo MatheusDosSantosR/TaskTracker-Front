@@ -26,3 +26,9 @@ export const recoveryPassword = async (email: string): Promise<IDefaultResponse>
     const user = await axiosInstance.post("/api/public/users/forgot-password", { email });
     return user.data
 };
+
+// Função para resetar a senha
+export const resetPassword = async (newPassword: string, token: string): Promise<IDefaultResponse> => {
+    const user = await axiosInstance.post("/api/public/users/reset-password/" + token, { newPassword });
+    return user.data
+};

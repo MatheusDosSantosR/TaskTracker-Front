@@ -5,7 +5,7 @@ import RecoveryPassword from '../../components/RecoveryPassword/RecoveryPassword
 const Dashboard: React.FC = () => {
     useEffect(() => {
         document.title = 'Recuperação de conta';
-      }, []);
+    }, []);
     return (
         <RecoveryPassword />
     );
